@@ -1,0 +1,100 @@
+$if(fontfamily)$
+\usepackage[$for(fontfamilyoptions)$$fontfamilyoptions$$sep$,$endfor$]{$fontfamily$}
+$else$
+\usepackage{mathpazo}
+$endif$
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\usepackage[unicode=true]{hyperref}
+$if(colorlinks)$
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+$endif$
+\hypersetup{
+$if(title-meta)$
+            pdftitle={$title-meta$},
+$endif$
+$if(author-meta)$
+            pdfauthor={$author-meta$},
+$endif$
+$if(keywords)$
+            pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+$endif$
+$if(colorlinks)$
+            colorlinks=true,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$Maroon$endif$,
+            citecolor=$if(citecolor)$$citecolor$$else$Blue$endif$,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$Blue$endif$,
+$else$
+            pdfborder={0 0 0},
+$endif$
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+$if(lang)$
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,$for(babel-otherlangs)$$babel-otherlangs$,$endfor$main=$babel-lang$]{babel}
+$if(babel-newcommands)$
+  $babel-newcommands$
+$endif$
+\else
+  \usepackage{polyglossia}
+  \setmainlanguage[$polyglossia-lang.options$]{$polyglossia-lang.name$}
+$for(polyglossia-otherlangs)$
+  \setotherlanguage[$polyglossia-otherlangs.options$]{$polyglossia-otherlangs.name$}
+$endfor$
+\fi
+$endif$
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+$if(inline-links)$
+% Standard behavior
+$else$
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+$endif$
+
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+$if(signature)$
+\usepackage{graphicx,grffile}
+\signature{$if(signature-before)$\vspace*{$signature-before$}$endif$\includegraphics{$signature$}$if(author)$\\$if(signature-after)$\vspace*{$signature-after$}$endif$$for(author)$$author$$sep$\\$endfor$$endif$}
+$else$
+$if(author)$
+\signature{$for(author)$$author$$sep$\\$endfor$}
+$endif$
+$endif$
+
+$if(date)$
+\date{$date$}
+$endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+\address{$for(return-address)$$return-address$$sep$\\$endfor$}
+
+$if(plainquote)$
+% nuttin, defaults are used
+$else$
+\usepackage{mdframed} % color is loaded by mdframed
+\definecolor{greyborder}{RGB}{221,221,221}
+\definecolor{greytext}{RGB}{119,119,119}
+\newmdenv[rightline=false,bottomline=false,topline=false,linewidth=3pt,linecolor=greyborder,skipabove=\parskip]{blockquote}
+\renewenvironment{quote}{\begin{blockquote}\list{}{\rightmargin=0em\leftmargin=0em}%
+\item\relax\color{greytext}\ignorespaces}{\unskip\unskip\endlist\end{blockquote}}
+$endif$
+
+$if(letterhead)$
+\usepackage{wallpaper}
+\ThisU$if(letterhead-side)$$letterhead-side$$else$L$endif$PositionWallPaper{$if(letterhead-scale)$$letterhead-scale$$else$1$endif$}{$if(letterhead-x-offset)$$letterhead-x-offset$$else$0pt$endif$}{$if(letterhead-y-offset)$$letterhead-y-offset$$else$0pt$endif$}{$letterhead$}
+$endif$
+
+$if(letterfoot)$
+\usepackage{wallpaper}
+\ThisL$if(letterfoot-side)$$letterfoot-side$$else$L$endif$PositionWallPaper{$if(letterfoot-scale)$$letterfoot-scale$$else$1$endif$}{$if(letterfoot-x-offset)$$letterfoot-x-offset$$else$0pt$endif$}{$if(letterfoot-y-offset)$$letterfoot-y-offset$$else$0pt$endif$}{$letterfoot$}
+$endif$
