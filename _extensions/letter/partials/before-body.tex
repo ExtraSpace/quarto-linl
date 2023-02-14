@@ -1,3 +1,10 @@
+
+$for(include-before)$
+$include-before$
+$endfor$
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+$endif$
 $if(author)$
 \signature{$author$}
 \address{${ by-author:_authors.tex() }}
